@@ -1,9 +1,13 @@
+DROP TABLE IF EXISTS Service CASCADE;
 DROP TABLE IF EXISTS Utilisateur CASCADE;
 DROP TABLE IF EXISTS Login CASCADE;
+DROP TABLE IF EXISTS Trajet CASCADE;
+DROP TABLE IF EXISTS Location CASCADE;
+DROP TABLE IF EXISTS Reservation CASCADE;
 
 CREATE TABLE Login
 (
-    idLogin int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idLogin int AUTO_INCREMENT PRIMARY KEY,
     mail text CHECK( mail='%@%.%' ),
     mdp text CHECK( length(mdp)>=4 ),
     type varchar(30) NOT NULL
@@ -11,7 +15,7 @@ CREATE TABLE Login
 
 CREATE TABLE Utilisateur
 (
-    idUser int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idUser int AUTO_INCREMENT PRIMARY KEY,
     idLogin int NOT NULL,
     nom varchar(50) NOT NULL,
     prenom varchar(50) NOT NULL,
@@ -23,14 +27,14 @@ CREATE TABLE Utilisateur
 
 CREATE TABLE Service
 (
-    idService int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idService int AUTO_INCREMENT PRIMARY KEY,
     idUser int NOT NULL,
     FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser)
 );
 
 CREATE TABLE Trajet
 (
-    idTrajet int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idTrajet int AUTO_INCREMENT PRIMARY KEY,
     idService int NOT NULL,
     idUser int NOT NULL,
     villeD varchar(30) NOT NULL,
@@ -40,11 +44,11 @@ CREATE TABLE Trajet
     tarif double UNSIGNED,
     FOREIGN KEY (idService) REFERENCES Service(idService),
     FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser)
-)
+);
 
 CREATE TABLE Location
 (
-    idLocation int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    idLocation int AUTO_INCREMENT PRIMARY KEY,
     idService int NOT NULL,
     idUser int NOT NULL,
     dateD date NOT NULL,
@@ -53,12 +57,14 @@ CREATE TABLE Location
     tarif double UNSIGNED,
     FOREIGN KEY (idService) REFERENCES Service(idService),
     FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser)
-)
+);
 
 CREATE TABLE Reservation
 (
     idReservation int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     idService int NOT NULL,
     dateReserv date NOT NULL,
-)
+    comm double NOT NULL,
+    FOREIGN KEY (idService) REFERENCES Service(idService)
+);
 
