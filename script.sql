@@ -45,8 +45,8 @@ CREATE TABLE Trajet
     idUser int NOT NULL,
     villeD varchar(30) NOT NULL,
     villeA varchar(30) NOT NULL,
-    heureD date NOT NULL,
-    heureA date NOT NULL,
+    heureD time NOT NULL,
+    heureA time NOT NULL,
     tarif double UNSIGNED,
     FOREIGN KEY (idService) REFERENCES Service(idService),
     FOREIGN KEY (idUser) REFERENCES Utilisateur(idUser)
