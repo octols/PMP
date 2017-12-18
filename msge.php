@@ -29,7 +29,7 @@
             <!-- Nav -->
               <nav id="nav">
                 <ul>
-                  <li><a href="Profil.php">Mon profil</a></li>
+                  <li><a href="profil.php">Mon profil</a></li>
                   <li><a href="Chercher2.php">Chercher un trajet</a></li>
                   <li><a href="Proposer.php">Proposer un trajet</a></li>
                   <li><a href="Proposer.php">Mes trajets</a></li>
@@ -39,7 +39,8 @@
 
           </div>
         </div>
-        <article class="box post
+
+       <article class="box post
                   <div class="onglet">
                     <a href="messagerie.php"><input type="button" name="Répondre" value="Nouveau message :"/></a>
                    <a href="msgr.php"><input type="button" name="Répondre" value="Message reçues :"/></a>
@@ -47,29 +48,32 @@
                   </div>   
               </article>
 
+
+
       <!-- Main -->
         <div id="main-wrapper">
           <div class="container">
           
-          <form action="../Model/messagerie2.php" method="post">
-                 <p>
-                   <p><strong>Votre adresse Mail: </strong>
-                   <input type="text" name="exp" /></p>
-               
-                   <p><strong>Adresse Mail destinataire: </strong>
-                   <input type="text" name="destinataire" /></p>
-               
-                  <p><strong>Message :</strong><br>
-                   <textarea type="text" name="msg" cols="50" rows="10"></textarea></p>
-               
-                 <br>  <br>  <br>
-                 <input type="submit" value="Envoyer" />
-               
-                 </p>
-               </form>
+                    <?php
+try {
+  $bdd = new PDO('mysql:host=localhost;dbname=projet_php;charset=utf8','root','');
+}
+catch (Exception $e) {
+  die('Erreur : ' . $e->getMessage());
+}
+
+$myId = $_SESSION['idUser']
+
+$rep = $bdd->prepare('SELECT  m.msg, m.idUser1, u.prenom, u.nom FROM messagerie where ". $myId ." = idUser1 Join utilisateur u ON u.idUser = m.idUser1 GROUP BY m.idUser1');
+
+$donnees=$rep->fetch();
+if($donnees!=null){ 
+  echo $donnes;
+}
+?>
 
             <!-- Content -->
-              
+             
 
           </div>
         </div>
