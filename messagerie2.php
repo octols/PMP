@@ -13,6 +13,6 @@ $idDes = $bdd->prepare('SELECT INTO utilisateur(idLogin) where mail= exp');
 $req = $bdd->prepare('INSERT INTO messagerie(idMessage, idUser1, idUser2, msg ) 
 	VALUES(?,?,?,?)');
 
-$req->execute(array(default,$_POST['idExp'],$_POST['idDes'],$_POST['msg']));
+$req->execute(array($_POST['idExp'],$_POST['idDes'],$_POST['msg']));
 ?>
 
