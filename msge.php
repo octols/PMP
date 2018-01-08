@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(isset($_SESSION['mail']) && !empty($_SESSION['typelog']))
+{
+?>
 <!DOCTYPE HTML>
 <!--
   Dopetrope by HTML5 UP
@@ -62,14 +67,28 @@ catch (Exception $e) {
   die('Erreur : ' . $e->getMessage());
 }
 
-$myId = $_SESSION['idUser']
+$myId = $_SESSION['idUser'];
 
-$rep = $bdd->prepare('SELECT  m.msg, m.idUser1, u.prenom, u.nom FROM messagerie where ". $myId ." = idUser1 Join utilisateur u ON u.idUser = m.idUser1 GROUP BY m.idUser1');
+$query = 'SELECT  m.msg, m.idUser1, u.prenom, u.nom FROM messagerie m  JOIN utilisateur u ON u.idUser = m.idUser1  where  \' '. $myId .'\' = idUser1 ';
 
-$donnees=$rep->fetch();
-if($donnees!=null){ 
-  echo $donnes;
-}
+//$req = $bdd->query('SELECT  m.msg, m.idUser1, u.prenom, u.nom FROM messagerie m  Join utilisateur u ON u.idUser = m.idUser1  where \' '. $myId .' '\' = idUser1 ');
+
+ $res = $bdd->query($query);
+
+   while($donnees = $res->fetch())      {
+            ?>
+            <p>
+                <tr>
+                    <th><?php echo $donnees['msg'];?></th>
+                    <th><?php echo $donnees['idUser1'];?></th>
+                    <th><?php echo $donnees['prenom'];?></th>
+                    <th><?php echo $donnees['nom'];?></th>
+                </tr>
+              </p>
+                <?php
+        } 
+         
+
 ?>
 
             <!-- Content -->
@@ -119,3 +138,8 @@ if($donnees!=null){
 
   </body>
 </html>
+
+<?php }
+else {
+    header("Location: ../index.php");
+} ?>
