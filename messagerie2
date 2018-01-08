@@ -1,0 +1,22 @@
+<?php
+session_start();
+
+try {
+    $bdd = new PDO('mysql:host=localhost;dbname=pmp;charset=utf8','root','');
+}
+catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+}
+
+
+$idExp=$_SESSION['idUser'];
+
+$idDes = $_SESSION['idUser'];
+
+$req =$bdd->prepare('INSERT INTO messagerie(idMessage, idUser1, idUser2, msg ) 
+ 	VALUES(default, :idUser1,:idUser2, :msg)');
+$req->execute(array('idUser1' => $idExp, 'idUser2' => $idDes, 'msg' => $_POST['msg']));
+
+header('Location: ../View/msge.php');
+exit();
+?>
