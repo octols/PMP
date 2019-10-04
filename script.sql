@@ -29,7 +29,7 @@ CREATE TABLE Utilisateur
     argent double UNSIGNED,
     FOREIGN KEY (idLogin) REFERENCES Login(idLogin),
     UNIQUE(nom,prenom)
-);
+); 
 
 CREATE TABLE Service
 (
